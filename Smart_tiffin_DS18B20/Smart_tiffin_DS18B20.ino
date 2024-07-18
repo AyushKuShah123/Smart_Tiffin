@@ -13,7 +13,7 @@
 // LED indicators pins
 #define RED_LED_PIN D6
 #define BLUE_LED_PIN D7
-#define GREEN_LED_PIN D4
+#define GREEN_LED_PIN D8
 
 // Setup oneWire instances to communicate with each DS18B20 sensor
 OneWire oneWireMetal(ONE_WIRE_BUS_METAL);
