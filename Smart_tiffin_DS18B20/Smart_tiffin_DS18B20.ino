@@ -2,18 +2,21 @@
 #include <DallasTemperature.h>
 
 // Data wire for the metal sheet sensor is plugged into pin D2 (GPIO4) on the ESP8266
-#define ONE_WIRE_BUS_METAL D2
+#define ONE_WIRE_BUS_METAL D3  //D3
 // Data wire for the battery sensor is plugged into pin D3 (GPIO0) on the ESP8266
-#define ONE_WIRE_BUS_BATTERY D3
+#define ONE_WIRE_BUS_BATTERY D4 //D4
 
 // Relay and pull-up switch pin
-#define RELAY_PIN D1
-#define SWITCH_PIN D5
+#define RELAY_PIN D0    //D0
+#define SWITCH_PIN D5     //D5
+
+// #define LED D0
 
 // LED indicators pins
 #define RED_LED_PIN D6
-#define BLUE_LED_PIN D7
-#define GREEN_LED_PIN D8
+#define GREEN_LED_PIN D7
+#define BLUE_LED_PIN D8
+
 
 // Setup oneWire instances to communicate with each DS18B20 sensor
 OneWire oneWireMetal(ONE_WIRE_BUS_METAL);
@@ -27,7 +30,7 @@ DallasTemperature sensorsBattery(&oneWireBattery);
 
 // Temperature thresholds
 #define METAL_SHEET_TEMP_THRESHOLD 60.0
-#define BATTERY_TEMP_CUTOFF 50.0
+#define BATTERY_TEMP_CUTOFF 45.0
 #define BATTERY_TEMP_RESUME 40.0
 
 bool relayState = false;
@@ -46,12 +49,14 @@ void setup() {
   pinMode(RED_LED_PIN, OUTPUT);
   pinMode(BLUE_LED_PIN, OUTPUT);
    pinMode(GREEN_LED_PIN, OUTPUT);
+   //pinMode(LED, OUTPUT);
 
     // Initialize relay state and LEDs
   digitalWrite(RELAY_PIN, LOW);
   digitalWrite(RED_LED_PIN, LOW);
   digitalWrite(BLUE_LED_PIN, LOW);
   digitalWrite(GREEN_LED_PIN, LOW);
+  //digitalWrite(LED, LOW);
 }
 
 void loop() {
@@ -63,7 +68,7 @@ void loop() {
   Serial.println(metalSheetTemp);
   Serial.print("Battery Temperature: ");
   Serial.println(batteryTemp);
-
+  
   // Control LED indicators based on temperature thresholds
   if (metalSheetTemp >= METAL_SHEET_TEMP_THRESHOLD) {
     digitalWrite(RED_LED_PIN, HIGH); // Turn on red LED
@@ -81,8 +86,9 @@ void loop() {
 
   // Temperature control logic for relay
   if (batteryTemp >= BATTERY_TEMP_CUTOFF) {
-    digitalWrite(RELAY_PIN, LOW);
+    digitalWrite(RELAY_PIN, HIGH);
     relayState = false;
+    digitalWrite(RELAY_PIN, LOW);
     Serial.println("Battery temperature too high! Relay turned off.");
   } else if (batteryTemp < BATTERY_TEMP_RESUME && relayState == false) {
     relayState = true;
@@ -105,5 +111,9 @@ void loop() {
   }
 
   // Wait a bit before taking the next readings
-  delay(1000);
+  // digitalWrite(LED, LOW);
+  delay(450);
+  // digitalWrite(LED, HIGH);
+  // delay(100);
+
 }
