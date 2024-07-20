@@ -1,13 +1,13 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
 
-// Data wire for the metal sheet sensor is plugged into pin D2 (GPIO4) on the ESP8266
+// Data wire for the metal sheet sensor is plugged into pin D3 (GPIO0) on the ESP8266
 #define ONE_WIRE_BUS_METAL D3  //D3
-// Data wire for the battery sensor is plugged into pin D3 (GPIO0) on the ESP8266
+// Data wire for the battery sensor is plugged into pin D4 (GPIO2) on the ESP8266
 #define ONE_WIRE_BUS_BATTERY D4 //D4
 
 // Relay and pull-up switch pin
-#define RELAY_PIN D0    //D0
+#define RELAY_PIN D0    //D0  
 #define SWITCH_PIN D5     //D5
 
 // #define LED D0
